@@ -1,5 +1,6 @@
 var express = require('express');
 const Event = require('../models/event');
+// const SMS = require('../routes/sendsms');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 var express = require("express");
@@ -12,6 +13,11 @@ router.get('/lidor', function (req, res, next) {
     console.log("lidor is the king");
     res.json('lidor');
 });
+// router.get('/lidorsms', function (req, res, next) {
+//     // SMS
+//     var _sms = new SMS.sms();
+//     _sms.sendSms("recipientCellNumber", "test 111\n עברית");
+// });
 
 // Create event
 router.post('/event', function (req, res, next) {
@@ -78,16 +84,6 @@ router.delete('/deleteEvent/:id', function (req, res, next) {
         .then(() => res.json("Evenet delteed"))
         .catch(err => res.json(err))
 });
-
-
-
-
-
-
-
-
-
-
 
 /////////////////////register and login
 router.post('/register', async function (req, res, next) {
