@@ -31,6 +31,7 @@ router.patch('/addpepole/:id', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
+
 // Delete Pepole
 router.patch('/deletepepole/:id', function (req, res, next) {
     const update = req.body
@@ -39,15 +40,13 @@ router.patch('/deletepepole/:id', function (req, res, next) {
             let pepoleCome = data.pepoleCome
             let index = pepoleCome.findIndex(update.phone)
             pepoleCome.splice(index, 1)
-
-
-
-            Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: [pepoleCome] }, { returnDocument: 'after' }, function (err, doc) {
+            Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(200); //IS OK
             })
         })
         .catch(err => res.json(err))
 });
+
 // update Pepole
 router.patch('/updatepepole/:id', function (req, res, next) {
     const update = req.body
@@ -57,12 +56,13 @@ router.patch('/updatepepole/:id', function (req, res, next) {
             let index = pepoleCome.findIndex(update.phone)
             pepoleCome.splice(index, 1)
             pepoleCome.push(update)
-            Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: [pepoleCome] }, { returnDocument: 'after' }, function (err, doc) {
+            Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(200); //IS OK
             })
         })
         .catch(err => res.json(err))
 });
+
 // get all event id and info
 router.get('/allEvent', function (req, res, next) {
     Event.find({}, ["uuid", "campaignName", "ownerName", "phone"])
@@ -71,6 +71,7 @@ router.get('/allEvent', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
+
 // delete event
 router.delete('/deleteEvent/:id', function (req, res, next) {
     Event.findOneAndDelete({ _id: req.params.id })
