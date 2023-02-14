@@ -43,7 +43,7 @@ router.get('/getPeople/:id', function (req, res, next) {
     eventy = Event.findOne({ _id: id })
         .then((data) => {
             Event.findOne({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
-                res.json(data); //IS OK
+                res.json(data.value); //IS OK
             })
         })
         .catch(err => res.json(err))
