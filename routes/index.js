@@ -37,6 +37,17 @@ router.patch('/addpepole/:id', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
+// get All pepole in event
+router.get('/getPeople/:id', function (req, res, next) {
+    const id = req.body
+    eventy = Event.findOne({ _id: id })
+        .then((data) => {
+            Event.findOne({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(data); //IS OK
+            })
+        })
+        .catch(err => res.json(err))
+});
 
 // Delete Pepole
 router.patch('/deletepepole/:id', function (req, res, next) {
