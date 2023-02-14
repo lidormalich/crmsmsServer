@@ -46,7 +46,6 @@ router.get('/getPeople/:id', function (req, res, next) {
         .then((data) => {
             console.log("OK");
             Event.findById({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
-                console.log(data);
                 res.json(data.pepoleCome); //IS OK
             })
         })
@@ -70,6 +69,7 @@ router.patch('/deletepepole/:id', function (req, res, next) {
 
 // update Pepole
 router.patch('/updatepepole/:id', function (req, res, next) {
+    console.log("Hare");
     const update = req.body
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
@@ -78,7 +78,7 @@ router.patch('/updatepepole/:id', function (req, res, next) {
             pepoleCome.splice(index, 1)
             pepoleCome.push(update)
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
-                res.json(200); //IS OK
+                res.json(data); //IS OK
             })
         })
         .catch(err => res.json(err))
@@ -86,7 +86,15 @@ router.patch('/updatepepole/:id', function (req, res, next) {
 
 // get all event id and info
 router.get('/allEvent', function (req, res, next) {
-    Event.find({}, ["uuid", "campaignName", "ownerName", "phone"])
+    Event.find({}, ["_id", "uuid", "campaignName", "ownerName", "phone"])
+        .then((data) => {
+            res.json(data)
+        })
+        .catch(err => res.json(err))
+});
+// get  event info by id
+router.get('/eventinfo/:id', function (req, res, next) {
+    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom"])
         .then((data) => {
             res.json(data)
         })

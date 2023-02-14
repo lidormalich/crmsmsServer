@@ -19,6 +19,18 @@ const EventSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    bride: {
+        type: String,
+        required: true
+    },
+    groom: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
     pepoleCome: {
         type: [],
         required: false
