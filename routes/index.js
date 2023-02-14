@@ -37,13 +37,17 @@ router.patch('/addpepole/:id', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
-// get All pepole in event
+// get All pepole in event OKKKKKKKKKKKKKKKKKK
 router.get('/getPeople/:id', function (req, res, next) {
+    console.log("Hare");
     const id = req.body
-    eventy = Event.findOne({ _id: id })
+    console.log(req.params.id);
+    eventy = Event.findById({ _id: req.params.id })
         .then((data) => {
-            Event.findOne({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
-                res.json(data.value); //IS OK
+            console.log("OK");
+            Event.findById({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
+                console.log(data);
+                res.json(data.pepoleCome); //IS OK
             })
         })
         .catch(err => res.json(err))
