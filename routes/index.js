@@ -11,7 +11,7 @@ const User = require('../models/usersmodel');
 /* GET home page. */
 router.get('/lidor', function (req, res, next) {
     console.log("lidor is the king");
-    res.json('lidor');
+    res.json('lidor OK');
 });
 // router.get('/lidorsms', function (req, res, next) {
 //     // SMS
@@ -72,6 +72,7 @@ router.get('/getoneepepole/:id', function (req, res, next) {
             let pepoleCome = data.pepoleCome
             let peopleInfo = pepoleCome.filter((e) => e.phoneNumber != phoneNumToGet)
             Event.findOneAndUpdate({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
+
                 res.json(peopleInfo[0]);
             })
         })
@@ -108,8 +109,9 @@ router.get('/eventinfo/:id', function (req, res, next) {
     Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom"])
         .then((data) => {
             res.json(data)
+            console.log(data);
         })
-        .catch(err => res.json(err))
+        .catch(err => { console.log("fail"); res.json({ fail: undefined }) })
 });
 
 // delete event
