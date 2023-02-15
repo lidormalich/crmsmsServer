@@ -39,12 +39,10 @@ router.patch('/addpepole/:id', function (req, res, next) {
 });
 // get All pepole in event OKKKKKKKKKKKKKKKKKK
 router.get('/getPeople/:id', function (req, res, next) {
-    console.log("Hare");
     const id = req.body
-    console.log(req.params.id);
     eventy = Event.findById({ _id: req.params.id })
         .then((data) => {
-            console.log("OK");
+            // console.log("OK");
             Event.findById({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(data.pepoleCome); //IS OK
             })
@@ -52,13 +50,13 @@ router.get('/getPeople/:id', function (req, res, next) {
         .catch(err => res.json(err))
 });
 
-// Delete Pepole
+// Delete Pepole-OK
 router.patch('/deletepepole/:id', function (req, res, next) {
-    const update = req.body
+    const phoneNumToDelete = req.body
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
             let pepoleCome = data.pepoleCome
-            let index = pepoleCome.findIndex(update.phone)
+            let index = pepoleCome.filter((e) => e.phoneNumber == phoneNumToDelete)
             pepoleCome.splice(index, 1)
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(200); //IS OK
@@ -66,15 +64,28 @@ router.patch('/deletepepole/:id', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
+// get spicific peopole-WORK
+router.get('/getoneepepole/:id', function (req, res, next) {
+    const phoneNumToGet = req.body
+    eventy = Event.findOne({ _id: req.params.id })
+        .then((data) => {
+            let pepoleCome = data.pepoleCome
+            let peopleInfo = pepoleCome.filter((e) => e.phoneNumber != phoneNumToGet)
+            Event.findOneAndUpdate({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(peopleInfo[0]);
+            })
+        })
+        .catch(err => res.json(err))
+});
 
 // update Pepole
 router.patch('/updatepepole/:id', function (req, res, next) {
-    console.log("Hare");
+    // console.log("Hare");
     const update = req.body
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
             let pepoleCome = data.pepoleCome
-            let index = pepoleCome.findIndex(update.phone)
+            let index = pepoleCome.filter((e) => e.phoneNumber == update.phoneNumber)
             pepoleCome.splice(index, 1)
             pepoleCome.push(update)
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
@@ -110,12 +121,12 @@ router.delete('/deleteEvent/:id', function (req, res, next) {
 
 /////////////////////register and login
 router.post('/register', async function (req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     const { first_name, last_name, email } = req.body
     let { password } = req.body
     const userExists = await User.findOne({ email });
 
-    console.log(first_name + " " + last_name);
+    // console.log(first_name + " " + last_name);
     if (!userExists) {
         password = await bcrypt.hash(password, 10)
         const user = {
@@ -124,7 +135,7 @@ router.post('/register', async function (req, res, next) {
             email,
             password
         }
-        console.log(email + " nbc" + password);
+        // console.log(email + " nbc" + password);
         User.create(user).then(() => {
             res.json({
                 "error": false,
@@ -150,14 +161,14 @@ router.post('/register', async function (req, res, next) {
 });
 
 router.post('/login', async function (req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
 
     if (user) {
         const result = await bcrypt.compare(password, user.password)
-        console.log(result);
+        // console.log(result);
         if (result) {
             res.json({
                 "error": false,
