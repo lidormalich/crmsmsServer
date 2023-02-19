@@ -34,6 +34,10 @@ const EventSchema = mongoose.Schema({
     pepoleCome: {
         type: [],
         required: false
+    },
+    group: {
+        type: [],
+        required: false
     }
 })
 

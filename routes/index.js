@@ -26,12 +26,26 @@ router.post('/event', function (req, res, next) {
         .catch(err => res.json(err))
 
 });
+
+
 // Add pepole to event
 router.patch('/addpepole/:id', function (req, res, next) {
     const update = req.body
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: [...data.pepoleCome, req.body] }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(200); //IS OK
+            })
+        })
+        .catch(err => res.json(err))
+});
+// New group -OKKKKKK
+router.patch('/group/:id', function (req, res, next) {
+    const update = req.body
+    eventy = Event.findOne({ _id: req.params.id })
+
+        .then((data) => {
+            Event.findOneAndUpdate({ _id: req.params.id }, { group: [...data.group, req.body] }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(200); //IS OK
             })
         })
@@ -49,6 +63,18 @@ router.get('/getPeople/:id', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
+// get All group
+router.get('/getgroup/:id', function (req, res, next) {
+    const id = req.body
+    eventy = Event.findById({ _id: req.params.id })
+        .then((data) => {
+            Event.findById({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(data.group); //IS OK
+            })
+        })
+        .catch(err => res.json(err))
+});
+
 
 // Delete Pepole-OK
 router.patch('/deletepepole/:id', function (req, res, next) {
@@ -59,6 +85,20 @@ router.patch('/deletepepole/:id', function (req, res, next) {
             let index = pepoleCome.filter((e) => e.phoneNumber == phoneNumToDelete)
             pepoleCome.splice(index, 1)
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(200); //IS OK
+            })
+        })
+        .catch(err => res.json(err))
+});
+// Delete group-OK
+router.patch('/deletegroup/:id', function (req, res, next) {
+    const groupToDelete = req.body
+    eventy = Event.findOne({ _id: req.params.id })
+        .then((data) => {
+            let group = data.group
+            let index = group.filter((e) => e.group == groupToDelete)
+            group.splice(index, 1)
+            Event.findOneAndUpdate({ _id: req.params.id }, { group: group }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(200); //IS OK
             })
         })
@@ -83,6 +123,7 @@ router.get('/getoneepepole/:id', function (req, res, next) {
 router.patch('/updatepepole/:id', function (req, res, next) {
     // console.log("Hare");
     const update = req.body
+    console.log(update);
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
             let pepoleCome = data.pepoleCome
@@ -90,6 +131,7 @@ router.patch('/updatepepole/:id', function (req, res, next) {
             pepoleCome.splice(index, 1)
             pepoleCome.push(update)
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
+                // console.log(pepoleCome);
                 res.json(data); //IS OK
             })
         })
@@ -109,7 +151,7 @@ router.get('/eventinfo/:id', function (req, res, next) {
     Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom"])
         .then((data) => {
             res.json(data)
-            console.log(data);
+            // console.log(data);
         })
         .catch(err => { console.log("fail"); res.json({ fail: undefined }) })
 });
