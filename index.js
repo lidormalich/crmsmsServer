@@ -10,7 +10,7 @@ const routes = require('./routes/index')
 const bodyParser = require('body-parser')
 
 app.use(cors()) //Open To all
-require('dotenv').config()
+require('dotenv').config();
 
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.DB, { useNewUrlParser: true })
