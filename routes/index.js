@@ -175,7 +175,7 @@ router.post('/sendsms', function (req, res, next) {
             to: req.body.phone
         })
         .then(message => console.log(message))
-        .done();
+        .done(() => res.json("SENDED"));
 });
 
 /////////////////////register and login
