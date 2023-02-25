@@ -105,16 +105,16 @@ router.patch('/deletegroup/:id', function (req, res, next) {
         .catch(err => res.json(err))
 });
 // get spicific peopole-WORK
-router.get('/getoneepepole/:id', function (req, res, next) {
-    const phoneNumToGet = req.body
+router.get('/getoneepepole/:id/:phone', function (req, res, next) {
+    const phoneNumToGet = req.params.phone
+    console.log(phoneNumToGet + "Phone");
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
             let pepoleCome = data.pepoleCome
-            let peopleInfo = pepoleCome.filter((e) => e.phoneNumber != phoneNumToGet)
-            Event.findOneAndUpdate({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
+            const found = pepoleCome.find((e) => e.phoneNumber == phoneNumToGet);
 
-                res.json(peopleInfo[0]);
-            })
+            res.json(found);
+            console.log(found);
         })
         .catch(err => res.json(err))
 });
