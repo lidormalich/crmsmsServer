@@ -174,7 +174,7 @@ router.post('/sendsms', function (req, res, next) {
             from: '+12762849386',
             to: req.body.phone
         })
-        .then(message => { console.log(message); message.errorCode != null ? res.json("Sended") : res.json("Error") });
+        .then(message => { console.log(message); console.log(message.errorCode);; message.errorCode != null ? res.json("Sended") : res.json("Error") });
     // .done(() => res.json("SENDED"));
 });
 
