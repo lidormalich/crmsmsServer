@@ -162,19 +162,20 @@ router.delete('/deleteEvent/:id', function (req, res, next) {
         .then(() => res.json("Evenet delteed"))
         .catch(err => res.json(err))
 });
-router.patch('/sendsms', function (req, res, next) {
-    const accountSid = 'ACd0bc34c963f913edc3194674098c0ad0';
+router.post('/sendsms', function (req, res, next) {
+    const accountSid = process.env.ASID || '';
     const authToken = process.env.TOKEN || '';
     const client = require('twilio')(accountSid, authToken);
-
+    console.log(req.body.phone);
+    console.log(req.body.message);
     client.messages
         .create({
-            body: 'TEST 1',
+            body: req.body.message,
             from: '+12762849386',
-            to: '+972526761204'
+            to: req.body.phone
         })
-        .then(message => console.log(message.sid))
-        .done();
+        .then(message => console.log(message))
+        .done(res.json("SENDED"));
 });
 
 /////////////////////register and login
