@@ -155,7 +155,7 @@ router.get('/allEvent', function (req, res, next) {
 });
 // get  event info by id
 router.get('/eventinfo/:id', function (req, res, next) {
-    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom"])
+    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents"])
         .then((data) => {
             res.json(data)
             // console.log(data);
