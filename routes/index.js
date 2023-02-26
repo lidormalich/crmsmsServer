@@ -73,19 +73,31 @@ router.get('/getgroup/:id', function (req, res, next) {
 
 // Delete Pepole-OK
 router.patch('/deletepepole/:id', function (req, res, next) {
-    const phoneNumToDelete = req.body
+    const phoneNumToDelete = req.body.phoneNum
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
-            let pepoleCome = data.pepoleCome
-            let index = pepoleCome.filter((e) => e.phoneNumber == phoneNumToDelete)
+            let pepoleCome = data.pepoleCome;
+            console.log(pepoleCome);
+            // let index = pepoleCome.filter((e) => e.phoneNumber == phoneNumToDelete)
+            let index;
+            for (let i = 0; i < pepoleCome.length; i++) {
+                console.log("Hare");
+                console.log(pepoleCome[i].phoneNumber);
+                if (pepoleCome[i].phoneNumber === phoneNumToDelete) {
+                    index = i;
+                }
+            }
+
+            console.log(index + "INDEX");
             pepoleCome.splice(index, 1)
+            console.log(pepoleCome);
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
-                res.json(200); //IS OK
+                res.status(200); //IS OK
             })
         })
         .catch(err => res.json(err))
 });
-// Delete group-OK
+// Delete group-not tested
 router.patch('/deletegroup/:id', function (req, res, next) {
     const groupToDelete = req.body
     eventy = Event.findOne({ _id: req.params.id })
@@ -169,7 +181,7 @@ router.post('/sendsms', function (req, res, next) {
             from: '+12762849386',
             to: req.body.phone
         })
-        .then(message => { console.log(message); console.log(message.errorCode); message.errorCode == null ? res.json("Sended") : res.json("Error") });
+        .then(message => { console.log(message); console.log(message.errorCode); message.errorCode == null ? res.status(202).send("Sended") : res.status(404).send('Something broke! Error') });
     // .done(() => res.json("SENDED"));
 });
 

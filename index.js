@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 
 app.use(cors()) //Open To all
 require('dotenv').config();
+mongoose.set('strictQuery', false);
 
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.DB, { useNewUrlParser: true })
