@@ -158,7 +158,7 @@ router.get('/eventinfo/:id', function (req, res, next) {
     Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents"])
         .then((data) => {
             res.json(data)
-            // console.log(data);
+            console.log(data);
         })
         .catch(err => { console.log("fail"); res.json({ fail: undefined }) })
 });
