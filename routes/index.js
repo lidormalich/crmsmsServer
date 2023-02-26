@@ -13,11 +13,6 @@ router.get('/lidor', function (req, res, next) {
     console.log("lidor is the king");
     res.json('lidor OK');
 });
-// router.get('/lidorsms', function (req, res, next) {
-//     // SMS
-//     var _sms = new SMS.sms();
-//     _sms.sendSms("recipientCellNumber", "test 111\n עברית");
-// });
 
 // Create event
 router.post('/event', function (req, res, next) {
