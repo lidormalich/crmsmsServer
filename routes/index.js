@@ -77,8 +77,6 @@ router.patch('/deletepepole/:id', function (req, res, next) {
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
             let pepoleCome = data.pepoleCome;
-            console.log(pepoleCome);
-            // let index = pepoleCome.filter((e) => e.phoneNumber == phoneNumToDelete)
             let index;
             for (let i = 0; i < pepoleCome.length; i++) {
                 console.log("Hare");
@@ -92,7 +90,7 @@ router.patch('/deletepepole/:id', function (req, res, next) {
             pepoleCome.splice(index, 1)
             console.log(pepoleCome);
             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
-                res.status(200); //IS OK
+                res.json(200); //IS OK
             })
         })
         .catch(err => res.json(err))
@@ -144,6 +142,25 @@ router.patch('/updatepepole/:id', function (req, res, next) {
         })
         .catch(err => res.json(err))
 });
+// update Image
+router.patch('/img/:id', function (req, res, next) {
+    const update = req.body.data.coupleImage
+    eventy = Event.findOne({ _id: req.params.id })
+        .then((data) => {
+            Event.findOneAndUpdate({ _id: req.params.id }, { coupleImage: update }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(data); //IS OK
+            })
+        })
+        .catch(err => res.json(err))
+});
+// get couple Image
+router.get('/img/:id', function (req, res, next) {
+    eventy = Event.findOne({ _id: req.params.id }, ["_id", "coupleImage"])
+        .then((data) => {
+            res.json(data); //IS OK    
+        })
+        .catch(err => res.json(err))
+});
 
 // get all event id and info
 router.get('/allEvent', function (req, res, next) {
@@ -155,7 +172,7 @@ router.get('/allEvent', function (req, res, next) {
 });
 // get  event info by id
 router.get('/eventinfo/:id', function (req, res, next) {
-    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents"])
+    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage"])
         .then((data) => {
             res.json(data)
             console.log(data);

@@ -39,6 +39,10 @@ const EventSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    coupleImage: {
+        type: String,
+        required: false
+    },
     pepoleCome: {
         type: [],
         required: false
