@@ -50,6 +50,9 @@ const EventSchema = mongoose.Schema({
     group: {
         type: [],
         required: false
+    }, userId: {
+        type: String,
+        required: true
     }
 })
 

@@ -6,8 +6,16 @@ const cors = require('cors');
 const mongoose = require('mongoose')
 const app = express()
 const port = 5000
-const routes = require('./routes/index')
+
 const bodyParser = require('body-parser')
+
+// All Route
+const routes = require('./routes/index')
+const login = require('./routes/login')
+const event = require('./routes/event')
+const register = require('./routes/register')
+const sendsms = require('./routes/sms')
+
 
 app.use(cors()) //Open To all
 require('dotenv').config();
@@ -18,11 +26,16 @@ mongoose.connect(process.env.DB, { useNewUrlParser: true })
     .then(() => { console.log('conected to Data base') })
     .catch((err) => console.log(err))
 app.use(bodyParser.json())
-app.use('/api', routes)
+
+// Use all Route
+app.use('/api/login', login);
+app.use('/api/register', register);
+app.use('/api/event', event);
+app.use('/api', routes);
+app.use('/api/sendsms', sendsms);
 
 app.use((err, req, res, next) => {
     console.log(err);
-
     next();
 })
 
