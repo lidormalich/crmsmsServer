@@ -15,6 +15,8 @@ const login = require('./routes/login')
 const event = require('./routes/event')
 const register = require('./routes/register')
 const sendsms = require('./routes/sms')
+const sentences = require('./routes/sentences')
+const excel = require('./routes/excel')
 
 
 app.use(cors()) //Open To all
@@ -33,6 +35,8 @@ app.use('/api/register', register);
 app.use('/api/event', event);
 app.use('/api', routes);
 app.use('/api/sendsms', sendsms);
+app.use('/api/sentences', sentences);
+app.use('/api/excel', excel);
 
 app.use((err, req, res, next) => {
     console.log(err);

@@ -53,6 +53,9 @@ const EventSchema = mongoose.Schema({
     }, userId: {
         type: String,
         required: true
+    }, weddingSentence: {
+        type: String,
+        required: true
     }
 })
 

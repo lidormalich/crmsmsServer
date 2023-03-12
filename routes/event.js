@@ -136,4 +136,11 @@ router.get('/allEvent', auth, async (req, res, next) => {
         })
         .catch(err => res.json(err))
 });
+
+// delete event
+router.delete('/deleteEvent/:id', function (req, res, next) {
+    Event.findOneAndDelete({ _id: req.params.id })
+        .then(() => res.json("Evenet delteed"))
+        .catch(err => res.json(err))
+});
 module.exports = router;

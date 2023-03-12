@@ -123,20 +123,20 @@ router.get('/getoneepepole/:id/:phone', function (req, res, next) {
 // });
 // get  event info by id
 router.get('/eventinfo/:id', function (req, res, next) {
-    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage"])
+    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage", "weddingSentence"])
         .then((data) => {
-            res.json(data)
+            res.status(200).send(data)
             console.log(data);
         })
-        .catch(err => { console.log("fail"); res.json({ fail: undefined }) })
+        .catch(err => { console.log("fail"); res.status(400).send({ fail: undefined }) })
 });
 
-// delete event
-router.delete('/deleteEvent/:id', function (req, res, next) {
-    Event.findOneAndDelete({ _id: req.params.id })
-        .then(() => res.json("Evenet delteed"))
-        .catch(err => res.json(err))
-});
+// // delete event
+// router.delete('/deleteEvent/:id', function (req, res, next) {
+//     Event.findOneAndDelete({ _id: req.params.id })
+//         .then(() => res.json("Evenet delteed"))
+//         .catch(err => res.json(err))
+// });
 
 
 
