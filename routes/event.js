@@ -8,10 +8,7 @@ const Event = require('../models/event');
 
 
 
-const loginSchema = joi.object({
-    email: joi.string().required().min(6).email(),
-    password: joi.string().required().min(8),
-});
+
 
 // router.post('/', async function (req, res, next) {
 //     // joi validation

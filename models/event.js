@@ -56,6 +56,10 @@ const EventSchema = mongoose.Schema({
     }, weddingSentence: {
         type: String,
         required: true
+
+    }, weddingDate: {
+        type: String,
+        required: true
     }
 })
 

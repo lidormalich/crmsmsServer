@@ -123,7 +123,7 @@ router.get('/getoneepepole/:id/:phone', function (req, res, next) {
 // });
 // get  event info by id
 router.get('/eventinfo/:id', function (req, res, next) {
-    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage", "weddingSentence"])
+    Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage", "weddingSentence", "weddingDate"])
         .then((data) => {
             res.status(200).send(data)
             console.log(data);
