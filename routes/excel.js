@@ -6,19 +6,6 @@ const auth = require("../middlewares/auth");
 const Event = require('../models/event');
 
 
-
-
-const loginSchema = joi.object({
-    email: joi.string().required().min(6).email(),
-    password: joi.string().required().min(8),
-});
-
-// router.post('/', async function (req, res, next) {
-//     // joi validation
-//     const { email, password } = req.body
-//     const { error } = loginSchema.validate({ email, password });
-//     if (error) return res.status(400).send("Wrong body");
-
 // Create event
 router.post('/', auth, async function (req, res, next) {
     Event.create({ ...req.body, userId: req.payload._id })
@@ -54,20 +41,26 @@ router.post("/add/:id", (req, res) => {
 
 
     const update = req.body
-    eventy = Event.findOne({ _id: req.params.id })
-        .then((data) => {
-            let pepoleCome = data.pepoleCome;
-            for (const people of req.body.data) {
-                pepoleCome.push(people);
-            }
+    console.log(update);
+    let arryNew, temp;
+    // for (let index = 0; index < update.length; index++) {
+    //     temp = { PhoneNumber: update[index].Phone Number }
+    //     arryNew.push()
+    // }
+    // eventy = Event.findOne({ _id: req.params.id })
+    //     .then((data) => {
+    //         let pepoleCome = data.pepoleCome;
+    //         for (const people of req.body.data) {
+    //             pepoleCome.push(people);
+    //         }
 
-            console.log("pepoleCome DATA");
-            console.log(pepoleCome);
-            Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
-                res.json(200); //IS OK
-            })
-        })
-        .catch(err => res.json(err))
+    //         console.log("pepoleCome DATA");
+    //         console.log(pepoleCome);
+    //         Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
+    res.json(200); //IS OK
+    //         })
+    //     })
+    //     .catch(err => res.json(err))
 })
 
 module.exports = router;
