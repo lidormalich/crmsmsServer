@@ -34,33 +34,34 @@ router.post("/add/:id", (req, res) => {
     const { error } = excelSchema.validate(req.body);
     if (error) { console.log(error); return res.status(400).send("Wrong body"); }
 
-    // console.log(req.body);
-    // res.json("Ok");
-    console.log("H");
-    console.log("H");
+    const update = req.body.data;
+    let temp = [], newupdate = [];
+    for (let index = 0; index < update.length; index++) {
+        newupdate.push({
+            phoneNumber: update[index]["Phone Number"],
+            firstName: update[index]["First Name"],
+            lastName: update[index]["Last Name"],
+            NumberOfGuests: update[index]["Number Of Guests"],
+            NumberOfGuestsAccept: update[index]["Number Of Guests Accept"],
+        });
+    }
 
-
-    const update = req.body
-    console.log(update);
-    let arryNew, temp;
-    // for (let index = 0; index < update.length; index++) {
-    //     temp = { PhoneNumber: update[index].Phone Number }
-    //     arryNew.push()
-    // }
-    // eventy = Event.findOne({ _id: req.params.id })
-    //     .then((data) => {
-    //         let pepoleCome = data.pepoleCome;
-    //         for (const people of req.body.data) {
-    //             pepoleCome.push(people);
-    //         }
-
-    //         console.log("pepoleCome DATA");
-    //         console.log(pepoleCome);
-    //         Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
-    res.json(200); //IS OK
-    //         })
-    //     })
-    //     .catch(err => res.json(err))
+    // console.log("temp");
+    // console.log(temp);
+    eventy = Event.findOne({ _id: req.params.id })
+        .then((data) => {
+            // for (let index = 0; index < data.pepoleCome.length; index++) {
+            //     newupdate.push(data.pepoleCome[index]);
+            //     // console.log(data.pepoleCome[index]);
+            // }
+            Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: [...data.pepoleCome, ...newupdate] }, { returnDocument: 'after' }, function (err, doc) {
+                res.json(200);
+            })
+        })
+        .catch(err => res.json(err))
+    console.log("update");
+    // console.log(newupdate);
+    // res.json(200); //IS OK
 })
 
 module.exports = router;
