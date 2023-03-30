@@ -60,6 +60,9 @@ const EventSchema = mongoose.Schema({
     }, weddingDate: {
         type: String,
         required: true
+    }, eventsHall: {
+        type: String,
+        required: true
     }
 })
 
