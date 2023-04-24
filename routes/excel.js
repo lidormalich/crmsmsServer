@@ -43,6 +43,7 @@ router.post("/add/:id", (req, res) => {
             lastName: update[index]["Last Name"],
             NumberOfGuests: update[index]["Number Of Guests"],
             NumberOfGuestsAccept: update[index]["Number Of Guests Accept"],
+            eventGroupName: update[index]["Event Group"],
         });
     }
 
