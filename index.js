@@ -40,6 +40,7 @@ app.use('/api/excel', excel);
 
 app.use((err, req, res, next) => {
     console.log(err);
+    console.log(req);
     next();
 })
 

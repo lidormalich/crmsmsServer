@@ -76,60 +76,16 @@ router.get('/getoneepepole/:id/:phone', function (req, res, next) {
         .catch(err => res.json(err))
 });
 
-// // update Pepole
-// router.patch('/updatepepole/:id', function (req, res, next) {
-//     // console.log("Hare");
-//     const update = req.body
-//     eventy = Event.findOne({ _id: req.params.id })
-//         .then((data) => {
-//             let pepoleCome = data.pepoleCome
-//             let index = pepoleCome.filter((e) => e.phoneNumber == update.phoneNumber)
-//             pepoleCome.splice(index, 1)
-//             pepoleCome.push(update)
-//             Event.findOneAndUpdate({ _id: req.params.id }, { pepoleCome: pepoleCome }, { returnDocument: 'after' }, function (err, doc) {
-//                 // console.log(pepoleCome);
-//                 res.json(data); //IS OK
-//             })
-//         })
-//         .catch(err => res.json(err))
-// });
-// update Image
-// router.patch('/img/:id', function (req, res, next) {
-//     const update = req.body.data.coupleImage
-//     eventy = Event.findOne({ _id: req.params.id })
-//         .then((data) => {
-//             Event.findOneAndUpdate({ _id: req.params.id }, { coupleImage: update }, { returnDocument: 'after' }, function (err, doc) {
-//                 res.json(data); //IS OK
-//             })
-//         })
-//         .catch(err => res.json(err))
-// });
-// // get couple Image
-// router.get('/img/:id', function (req, res, next) {
-//     eventy = Event.findOne({ _id: req.params.id }, ["_id", "coupleImage"])
-//         .then((data) => {
-//             res.json(data); //IS OK    
-//         })
-//         .catch(err => res.json(err))
-// });
 
-// // get all event id and info
-// router.get('/allEvent', auth, async (req, res, next) => {
-//     Event.find({ userId: req.payload._id }, ["_id", "uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage"])
-//         .then((data) => {
-//             res.json(data)
-//         })
-//         .catch(err => res.json(err))
-// });
 // get  event info by id
 router.get('/eventinfo/:id', function (req, res, next) {
     Event.findOne({ _id: req.params.id }, ["uuid", "campaignName", "ownerName", "phone", "bride", "groom", "brideParents", "groomParents", "coupleImage", "weddingSentence", "weddingDate", "eventsHall"])
         .then((data) => {
-            let dateNew = data.weddingDate.split("-");
+            let dateNew = data.weddingDate.toString().split("-");
             data.weddingDate = dateNew[2] + "-" + dateNew[1] + "-" + dateNew[0];
             res.status(200).send(data);
         })
-        .catch(err => { console.log("fail"); res.status(400).send({ fail: undefined }) })
+        .catch(err => { console.log(err); res.status(400).send(err) })
 });
 
 // // delete event

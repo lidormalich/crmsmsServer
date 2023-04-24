@@ -4,6 +4,7 @@ const joi = require('joi');
 var express = require("express");
 const auth = require("../middlewares/auth");
 const Event = require('../models/event');
+const SMS = require('../models/smsmodel');
 
 
 
@@ -18,10 +19,13 @@ const Event = require('../models/event');
 
 // Create event
 router.post('/', auth, async function (req, res, next) {
-    Event.create({ ...req.body, userId: req.payload._id })
-        .then((data) => res.json(data))
-        .catch(err => res.json(err))
-
+    try {
+        let event = await Event.create({ ...req.body, userId: req.payload._id });
+        let sms = await SMS.create({ eventId: event._id });
+        res.status(200).send(event);
+    } catch (error) {
+        res.status(400).send(error);
+    }
 });
 // Add pepole to event
 router.patch('/addpepole/:id', function (req, res, next) {
@@ -40,8 +44,14 @@ router.get('/getPeople/:id', function (req, res, next) {
     eventy = Event.findById({ _id: req.params.id })
         .then((data) => {
             Event.findById({ _id: req.params.id }, { returnDocument: 'after' }, function (err, doc) {
-                res.json(data.pepoleCome); //IS OK
+                // res.json(data.pepoleCome); 
             })
+            for (const pepole of data.pepoleCome) {
+                if (pepole.NumberOfGuestsAccept == null) {
+                    pepole.NumberOfGuestsAccept = 0;
+                }
+            }
+            res.json(data.pepoleCome); //IS OK
         })
         .catch(err => res.json(err))
 });
