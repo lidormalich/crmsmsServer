@@ -121,9 +121,17 @@ router.patch('/img/:id', function (req, res, next) {
     const update = req.body.data.coupleImage
     eventy = Event.findOne({ _id: req.params.id })
         .then((data) => {
-            Event.findOneAndUpdate({ _id: req.params.id }, { coupleImage: update }, { returnDocument: 'after' }, function (err, doc) {
+            Event.findOne({ _id: req.params.id }, { coupleImage: update }, { returnDocument: 'after' }, function (err, doc) {
                 res.json(data); //IS OK
             })
+        })
+        .catch(err => res.json(err))
+});
+router.get('/date/:id', function (req, res, next) {
+    Event.find({ _id: req.params.id }, ["weddingDate"])
+        .then((data) => {
+            res.json(data)
+            console.log(data);
         })
         .catch(err => res.json(err))
 });
