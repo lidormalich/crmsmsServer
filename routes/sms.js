@@ -48,8 +48,8 @@ router.post('/', auth, async function (req, res, next) {
     const pass = process.env.pass || "";
     const sender = 'CRMSMS';
     const msg = req.body.message;
-    const recipient = "+972526761204";
-    // const recipient = req.body.phone;
+    // const recipient = "+972526761204";
+     const recipient = req.body.phone;
 
 
     let requesteObject = { key: smsKEY, user, pass, sender, recipient, msg };
